@@ -1,6 +1,12 @@
 # cuda-knn
  Implementation and analysis of the machine learning algorithm k-nearest neighbors, designed to leverage the GPU framework CUDA. 
 
+## Note to Code Reviewers
+Items to leave feedback on:
+- data_prep.ipynb : is this complete enough or does it need more explanation?
+- py-knn.py : this is my logic starting point for the later written CUDA version, any feedback on code structure would be appreciated. 
+-  
+
 
 ### Overview and Goals
 This project will include the following:
