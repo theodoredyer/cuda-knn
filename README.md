@@ -4,6 +4,7 @@
 
 ### Overview and Goals
 This project will include the following:
+- Python notebook for Exploratory Data Analysis of the input dataset
 - Basic CPU based Python implementation of the k-nn algorithm
 - Basic C based implementation of the k-nn algorithm
 - CUDA based implementation of the k-nn algorithm
@@ -18,9 +19,11 @@ Given that CUDA or GPU frameworks in general aim to provide performance benefit 
 
 
 ### Development Process
-1. Provided I already have a fair amount of experience working with both Python and Machine Learning in general, I'm going to first begin by building out a Python based implementation of k-nn to familiarize myself with the algorithm, and just the process of working with a machine learning data pipeline in general. 
-2. One of the biggest hurdles I'm going to face when developing the CUDA based version of this algorithm (or at least that I'm expecting) is going to be building the data pipeline in CPP/C to support the CUDA execution, given that my experience working with data pipelines so far has been using fairly advanced libraries in Python. With this in mind there will likely be some backstepping required to understand how to process the data without such helpful libraries which I'm assuming won't exist for what I need.
-3. After I've developed the basic machine learning data pipeline for C/CPP (and by this I mean developing the ability to ingest the data, reformat it into an appropriate data structure, remove any null values and clean the data, and create functionality to be able to easily retrieve information), I'm going to try to translate my Python implementation into baseline C/CPP. 
-4. Following this, I will analyze which parts of the training process for k-nn will be able to be replaced and sped up via kernel executions, and develop these components. This may be slightly complicated for k-nn, as this model strays from the traditional ML paradigm as it is non-parametric (I'll explain more about this in the final report). 
-5. Lastly once all of these implementations are finished, I will run a series of tests for execution time on each. I will run a series of tests each utilizing a different amount of the dataset I choose, tentatively thinking 10%, 50%, 100%, and recording the execution time for each. Additionally, because the choice of 'k' for this algorithm does have an impact on computational complexity, I will try a few choices of this as well, for example k=3 (minimum), k=5 (middle), k=11 (maximum). 
-6. The last step of developing this project will be to produce a final report based on the data generated from step 5. 
+1. Locating a dataset from https://www.kaggle.com/ (For now I'm thinking of using the Heart Failure Prediction Dataset found here: https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction)
+2. Performing EDA (Exploratory Data Analysis) on the input dataset to learn more about the features and value distributions, as well as making any necessary edits to dataset missing values. 
+3. Provided I already have a fair amount of experience working with both Python and Machine Learning in general, I'm going to first begin by building out a Python based implementation of k-nn to familiarize myself with the algorithm, and just the process of working with a machine learning data pipeline in general. 
+4. One of the biggest hurdles I'm going to face when developing the CUDA based version of this algorithm (or at least that I'm expecting) is going to be building the data pipeline in CPP/C to support the CUDA execution, given that my experience working with data pipelines so far has been using fairly advanced libraries in Python. With this in mind there will likely be some backstepping required to understand how to process the data without such helpful libraries which I'm assuming won't exist for what I need.
+5. After I've developed the basic machine learning data pipeline for C/CPP (and by this I mean developing the ability to ingest the data, reformat it into an appropriate data structure, remove any null values and clean the data, and create functionality to be able to easily retrieve information), I'm going to try to translate my Python implementation into baseline C/CPP. 
+6. Following this, I will analyze which parts of the training process for k-nn will be able to be replaced and sped up via kernel executions, and develop these components. This may be slightly complicated for k-nn, as this model strays from the traditional ML paradigm as it is non-parametric (I'll explain more about this in the final report). 
+7. Lastly once all of these implementations are finished, I will run a series of tests for execution time on each. I will run a series of tests each utilizing a different amount of the dataset I choose, tentatively thinking 10%, 50%, 100%, and recording the execution time for each. Additionally, because the choice of 'k' for this algorithm does have an impact on computational complexity, I will try a few choices of this as well, for example k=3 (minimum), k=5 (middle), k=11 (maximum). 
+8. The last step of developing this project will be to produce a final report based on the data generated from step 5. 
