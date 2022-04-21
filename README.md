@@ -33,3 +33,8 @@ Given that CUDA or GPU frameworks in general aim to provide performance benefit 
 6. Following this, I will analyze which parts of the training process for k-nn will be able to be replaced and sped up via kernel executions, and develop these components. This may be slightly complicated for k-nn, as this model strays from the traditional ML paradigm as it is non-parametric (I'll explain more about this in the final report). 
 7. Lastly once all of these implementations are finished, I will run a series of tests for execution time on each. I will run a series of tests each utilizing a different amount of the dataset I choose, tentatively thinking 10%, 50%, 100%, and recording the execution time for each. Additionally, because the choice of 'k' for this algorithm does have an impact on computational complexity, I will try a few choices of this as well, for example k=3 (minimum), k=5 (middle), k=11 (maximum). 
 8. The last step of developing this project will be to produce a final report based on the data generated from step 5. 
+
+### Personal Notes
+Given I'm not entirely sure how to fit kernel executions into the puzzle of the non parametric model, preliminary thoughts are the following: 
+- Data parallelism inside calculate_euclidian function, this is going to be a relatively straightforward calculation made thousands of times, each with up to k internal calculations, should be relatively easy to model with a cuda solution. 
+- Inside calculate_weights function, same as with calculate_euclidian, going to be a huge amount of data parallelism if I can figure out a way to model it. 
