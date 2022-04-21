@@ -9,13 +9,14 @@ using namespace std;
 int main() {
 
     // Opening our data file
-    string file_loc = "/datasets/clean_data.csv";
     string line;
-    ifstream inputfile(file_loc);
+    ifstream inputfile("datasets/clean_data.csv");
+
 
     // Processing input file line by line
+    int tracker = 0;
     if(inputfile.is_open()) {
-        while(getline(inputfile,line) && tracker < 10) {
+        while(getline(inputfile,line) && tracker < 1) {
             tracker += 1;
             cout << line << '\n';
         }
