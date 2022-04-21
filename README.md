@@ -6,6 +6,7 @@ Items to leave feedback on:
 - data_prep.ipynb : is this complete enough or does it need more explanation?
 - py-knn.py : this is my logic starting point for the later written CUDA version, any feedback on code structure would be appreciated. 
 - Comments in py-knn.py might look a little unfamiliar, the #%% comments are used to break the python code up into "cells" that can be executed separately from the entire script in my IDE (Spyder), most other IDEs also support this.  
+- For the moment I'm planning to use baseline 2d arrays to handle the job of Python's dataframe equivalent, with static references to indices for things like the target class, I'm not sure if theres a better or more sophisticated solution to this yet, but I'm going to keep looking
 
 
 ### Overview and Goals
@@ -38,3 +39,4 @@ Given that CUDA or GPU frameworks in general aim to provide performance benefit 
 Given I'm not entirely sure how to fit kernel executions into the puzzle of the non parametric model, preliminary thoughts are the following: 
 - Data parallelism inside calculate_euclidian function, this is going to be a relatively straightforward calculation made thousands of times, each with up to k internal calculations, should be relatively easy to model with a cuda solution. 
 - Inside calculate_weights function, same as with calculate_euclidian, going to be a huge amount of data parallelism if I can figure out a way to model it. 
+- May need to manually remove the index column from my dataset to be able to process it cleanly in Cuda C. 
