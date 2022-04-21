@@ -5,7 +5,7 @@
 Items to leave feedback on:
 - data_prep.ipynb : is this complete enough or does it need more explanation?
 - py-knn.py : this is my logic starting point for the later written CUDA version, any feedback on code structure would be appreciated. 
--  
+- Comments in py-knn.py might look a little unfamiliar, the #%% comments are used to break the python code up into "cells" that can be executed separately from the entire script in my IDE (Spyder), most other IDEs also support this.  
 
 
 ### Overview and Goals

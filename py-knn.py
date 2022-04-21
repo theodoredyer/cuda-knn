@@ -2,6 +2,10 @@ import pandas as pd
 import numpy as np
 import math
 
+# Theodore Dyer
+# Introduction to GPU Programming Spring 2022 (EN605.617.81)
+# Chance Pascale
+# 4/21/2022
 
 #%%
 
@@ -21,8 +25,8 @@ def calculate_euclidian(entry_one, entry_two, cols):
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    double
+        Euclidian distance between two data points
 
     """
     distance = 0
@@ -48,8 +52,8 @@ def calculate_weights(neighbors, verbose):
 
     Returns
     -------
-    neighbor_weights : TYPE
-        DESCRIPTION.
+    neighbor_weights : list
+        weights for 'k' neighbors, used to select appropriate class
 
     """
     
@@ -135,7 +139,6 @@ def knn_init(train, typeflag, target, cols, verbose):
             
         neighbor_weights = calculate_weights(nearest_neighbors, verbose)
         
-        
         if(typeflag == 'regression'):
             regression_result = 0
             for i in range(k):
@@ -161,7 +164,6 @@ def knn_init(train, typeflag, target, cols, verbose):
                 print(query)
             return classification_result
             
-    
     return knn
 
 #%%
@@ -214,8 +216,6 @@ def k_fold(dataframe, target, k, typeflag, verbose):
                     + str(max(test_indices)) + ' - ' + str(max(train_indices)) + ']'
                 )
         
-        
-    
     train = dataframe.iloc[train_ret]
     test = dataframe.iloc[test_ret]
         
