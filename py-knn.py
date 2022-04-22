@@ -7,7 +7,7 @@ import math
 # Chance Pascale
 # 4/21/2022
 
-#%%
+#%% 
 
 def calculate_euclidian(entry_one, entry_two, cols):
     """
