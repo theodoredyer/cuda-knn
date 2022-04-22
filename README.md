@@ -5,8 +5,9 @@
 Items to leave feedback on:
 - data_prep.ipynb : is this complete enough or does it need more explanation?
 - py-knn.py : this is my logic starting point for the later written CUDA version, any feedback on code structure would be appreciated. 
+- My current hurdle I'm working through is the fact that I utilized closure functions in my baseline python knn model, from my research I'm not entirely sure I'm going to be able to do the equivalent in CUDA C/C++, if anyone has suggestions for that, help would be greatly appreciated (For reference I'm talking about function knn_init() being a closure for knn() in py-knn.py - can I replicate this in cu-knn.cu?)
 - Comments in py-knn.py might look a little unfamiliar, the #%% comments are used to break the python code up into "cells" that can be executed separately from the entire script in my IDE (Spyder), most other IDEs also support this.  
-- For the moment I'm planning to use baseline 2d arrays to handle the job of Python's dataframe equivalent, with static references to indices for things like the target class, I'm not sure if theres a better or more sophisticated solution to this yet, but I'm going to keep looking
+- For the moment I'm planning to use baseline 2d arrays to handle the job of Python's dataframe equivalent, with static references to indices for things like the target class, I'm not sure if theres a better or more sophisticated solution to this yet, but I'm going to keep looking - if anyone has any suggesions that would be appreciated
 
 
 ### Overview and Goals
