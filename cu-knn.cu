@@ -93,6 +93,63 @@ double * calculate_weights(double neighbors[K], bool verbose) {
     return neighbor_weights;
 }
 
+/*
+evaluate_performance(predicted, actual)
+    Evaluates the performance of the algorithm's predictions, in our case
+    working with classification this will be done by producing an accuracy score
+
+- Params:
+    predicted = array of predicted values (order mattering)
+    actual = array of actual values (order mattering)
+
+- Return: double
+    classification accuracy score
+
+- Notes:
+    the length of these input arrays might not be K, it could be fold size
+    might need to cast to integers inside the function and take args as doubles
+
+*/
+void evaluate_performance(int predicted[NUM_ROWS], int actual[NUM_ROWS]) {
+    int true_res = 0;
+    int total = NUM_ROWS;
+
+    for(int i = 0; i < total; i++) {
+        if(predicted[i] == actual[i]) {
+            true_res += 1;
+        }
+    }
+
+    double score = (true_res / total);
+    cout << "Classification Accuracy: " << score << endl;
+    return score;
+}
+
+/*
+k_fold(dataframe, k, verbose)
+    Performs k-fold cross validation, dividing up proper index segments and 
+    evaluating each fold agains the rest to determine proper splits
+
+- Params:
+    dataframe = 2d array consisting of doubles, holding all input data
+    folds = number of folds to split the data into
+    verbose = boolean argument to signify whether or not we should print debug output
+
+- Return:
+    Still figuring this out, in the python version I returned two lists, but not entirely
+    sure how to implement that in this version
+
+- Note:
+    on second though I might just hard code these values instead of determining them here, 
+    I can just pull them from a test run in the equivalent python function, for now leaving it here. 
+
+*/
+void k_fold(double dataframe[NUM_ROWS][NUM_COLS], int folds, bool verbose) {
+
+    int fold_size = int(NUM_ROWS / folds);
+
+    // ignoring for now.. 
+}
 
 /*
 print_row(dataframe, row)
