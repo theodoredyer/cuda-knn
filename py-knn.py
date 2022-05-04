@@ -1,11 +1,13 @@
 import pandas as pd
 import numpy as np
+import time
 import math
 
 # Theodore Dyer
 # Introduction to GPU Programming Spring 2022 (EN605.617.81)
 # Chance Pascale
 # 4/21/2022
+
 
 #%% 
 
@@ -65,8 +67,8 @@ def calculate_weights(neighbors, verbose):
     neighbor_weights = []
     for i in range(k):
         neighbor_weights.append(neighbors[i][1] / total_neighbor_dist)
-        if(verbose):
-            print('Neighbor ' + str(i+1) + ' weight: ' + str(neighbor_weights[i]))
+        # if(verbose):
+            # print('Neighbor ' + str(i+1) + ' weight: ' + str(neighbor_weights[i]))
     if(verbose):
         print(sum(neighbor_weights))
         print()
@@ -123,6 +125,8 @@ def knn_init(train, typeflag, target, cols, verbose):
         """
         
         distances_list = []
+        if(verbose):
+            start_time = time.time()
         for i in range(len(train)):
         
             dist = calculate_euclidian(query, train.iloc[i], cols)
@@ -136,6 +140,9 @@ def knn_init(train, typeflag, target, cols, verbose):
                 print('Neighbor ' + str(i+1) + ': (Distance = ' + str(distances_list[i][1]) + ')')
                 print(distances_list[i][0])
                 print()
+        if(verbose):
+            end_time = time.time();
+            print('Calculating distances took: ' + str(end_time - start_time) + ' ms.')
             
         neighbor_weights = calculate_weights(nearest_neighbors, verbose)
         
@@ -216,6 +223,8 @@ def k_fold(dataframe, target, k, typeflag, verbose):
                     + str(max(test_indices)) + ' - ' + str(max(train_indices)) + ']'
                 )
         
+    # Train = 183-917
+    # Test = 0-182
     train = dataframe.iloc[train_ret]
     test = dataframe.iloc[test_ret]
         
@@ -378,13 +387,44 @@ def read_data(data_path, column_names):
     dataframe.columns = column_names
     return dataframe
 
+
+
+#%%
+
+def time_test(point_num):
+    """
+    Record the execution time to generate euclidian distances
+    for a select number of points, specified by parameter.
+
+    Parameters
+    ----------
+    point_num : int
+        The number of points for which to calculate euclidian distances
+
+    Returns
+    -------
+    None.
+
+    """
+    knn = knn_init(train, 'classification', heart_failure_target, heart_failure_knn_columns, True)
+
+    oneh_start = time.time()
+    
+    for i in range(point_num):
+        if(i == 1):
+            i += 1
+        knn(5, test.iloc[i], 'classification')
+        
+    oneh_end = time.time()
+    print(str(point_num) + ' point execution time: ' + str(oneh_end - oneh_start) + ' seconds.')
+    
+
 #%%
 
 # Setting up our data structure
 
 heart_failure_data_path = 'datasets/clean_data.csv'
 heart_failure_column_names = [
-    'index',
     'age',
     'sex',
     'chest_pain_type',
@@ -431,10 +471,22 @@ train, test = k_fold(heart_failure_df, 'heart_disease', 5, 'classification', Tru
 
 #%%
 
+
+
+time_test(183)
+
+
+#%%
+kval = 12
+
+full_start = time.time()
 knn = knn_init(train, 'classification', heart_failure_target, heart_failure_knn_columns, False)
 knn_preds = []
 for i in range(len(test)):
-    knn_preds.append(knn(5, test.iloc[i], 'classification'))
+    knn_preds.append(knn(kval, test.iloc[i], 'classification'))
+    
+full_end = time.time()
+print('Full execution time: ' + str(full_end - full_start) + ' seconds. (' + str(kval) + ' neighbors)')
     
 
 #%%
