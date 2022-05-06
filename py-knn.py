@@ -415,7 +415,7 @@ def time_test(point_num, verbose):
     None.
 
     """
-    knn = knn_init(train, 'classification', heart_failure_target, heart_failure_knn_columns, True)
+    knn = knn_init(train, 'classification', heart_failure_target, heart_failure_knn_columns, verbose)
 
     oneh_start = time.time()
     
@@ -484,7 +484,7 @@ train, test = k_fold(heart_failure_df, 'heart_disease', 5, 'classification', Tru
 
 
 
-time_test(183, True)
+time_test(10, False)
 
 
 #%%

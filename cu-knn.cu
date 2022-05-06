@@ -93,13 +93,14 @@ void generate_neighbors(double dataframe[NUM_ROWS][NUM_COLS], int fold_split,  b
         double distance = calculate_euclidian(dataframe, query, i, false);
         distances_list[i - fold_split][0] = i;
         distances_list[i - fold_split][1] = distance;
-        cout << "Row (" << i << ") Distance = " << distances_list[i-fold_split][1] << endl;
+        //cout << "Row (" << i << ") Distance = " << distances_list[i-fold_split][1] << endl;
     }
 
     clock_t elapsed;
     elapsed = clock() - start;
 
     if(verbose) {
+        cout << "Query Index: " << query << endl;
         printf("Calculating distances took: %f seconds. \n", ((float)elapsed) / CLOCKS_PER_SEC);
     }
 
@@ -281,8 +282,8 @@ int main() {
     // Test = 0-182
     // Train = 183-917
 
-    print_row(dataframe, 0);
-    print_row(dataframe, 200);
+    //print_row(dataframe, 0);
+    //print_row(dataframe, 200);
 
     generate_neighbors(dataframe, 183, true, 5, 12);
 
