@@ -135,6 +135,7 @@ def knn_init(train, typeflag, target, cols, verbose):
         if(verbose):
             end_calc = time.time()
             print('Calculating distances took: ' + str(end_calc - start_calc) + ' ms.')
+            print()
             start_sort = time.time()
         return 0
         
@@ -399,7 +400,7 @@ def read_data(data_path, column_names):
 
 #%%
 
-def time_test(point_num):
+def time_test(point_num, verbose):
     """
     Record the execution time to generate euclidian distances
     for a select number of points, specified by parameter.
@@ -419,6 +420,8 @@ def time_test(point_num):
     oneh_start = time.time()
     
     for i in range(point_num):
+        if(verbose):
+            print("Query Index: " + str(i))
         if(i == 1):
             i += 1
         knn(5, test.iloc[i], 'classification')
@@ -481,7 +484,7 @@ train, test = k_fold(heart_failure_df, 'heart_disease', 5, 'classification', Tru
 
 
 
-time_test(10)
+time_test(183, True)
 
 
 #%%
