@@ -126,11 +126,17 @@ def knn_init(train, typeflag, target, cols, verbose):
         
         distances_list = []
         if(verbose):
-            start_time = time.time()
+            start_calc = time.time()
         for i in range(len(train)):
         
             dist = calculate_euclidian(query, train.iloc[i], cols)
             distances_list.append((train.iloc[i], dist))
+
+        if(verbose):
+            end_calc = time.time()
+            print('Calculating distances took: ' + str(end_calc - start_calc) + ' ms.')
+            start_sort = time.time()
+        return 0
         
         nearest_neighbors = []
         distances_list.sort(key=lambda index: index[1])
@@ -140,9 +146,11 @@ def knn_init(train, typeflag, target, cols, verbose):
                 print('Neighbor ' + str(i+1) + ': (Distance = ' + str(distances_list[i][1]) + ')')
                 print(distances_list[i][0])
                 print()
+
         if(verbose):
-            end_time = time.time();
-            print('Calculating distances took: ' + str(end_time - start_time) + ' ms.')
+            end_time = time.time()
+            print('Sorting neighbors took: ' + str(end_time - start_sort) + ' ms.')
+
             
         neighbor_weights = calculate_weights(nearest_neighbors, verbose)
         
@@ -473,7 +481,7 @@ train, test = k_fold(heart_failure_df, 'heart_disease', 5, 'classification', Tru
 
 
 
-time_test(183)
+time_test(10)
 
 
 #%%

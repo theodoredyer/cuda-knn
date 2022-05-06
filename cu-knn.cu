@@ -5,14 +5,16 @@
 #include <string>
 #include <sstream>
 #include <math.h>
+#include <time.h>
+#include <unistd.h>
 
 #define NUM_COLS 12
 #define NUM_ROWS 918
+#define TRAIN_POINTS 735
 #define K 5
 
 
 using namespace std;
-
 
 /*
 calculate_euclidian(dataframe, row_one, row_two)
@@ -26,7 +28,7 @@ calculate_euclidian(dataframe, row_one, row_two)
 - Return:
     Euclidian distance between the two data points
 */
-double calculate_euclidian(double dataframe[NUM_ROWS][NUM_COLS], int row_one, int row_two) {
+double calculate_euclidian(double dataframe[NUM_ROWS][NUM_COLS], int row_one, int row_two, bool verbose) {
     double distance = 0;
 
     // Using NUM_COLS - 1, beause we don't want to include the target column at index 12
@@ -36,8 +38,75 @@ double calculate_euclidian(double dataframe[NUM_ROWS][NUM_COLS], int row_one, in
         distance += p_dist;
     }
 
+    distance = sqrt(distance);
+
+    if(verbose) {
+        cout << "Distance from entry (" << (row_one) << ") and entry (" << row_two << ") is: " << distance << endl;
+    }
+
     return sqrt(distance);
 }
+
+/*
+generate_neighbors(distances_list, verbose, k)
+Sorts a list of neighbors to a query point to determine the k closest ones.
+
+- Params:
+    distances_list = array containing the following:
+        [row ID][distance to query point]
+    verbose = flag to indicate whether or not to print console output
+    k = number of neighbors to return
+
+- Return:
+    void
+*/
+void sort_neighbors(double distances_list[TRAIN_POINTS][2], bool verbose, int k) {
+
+}
+
+/*
+generate_neighbors(dataframe, fold_split, verbose, k)
+- Computes the distances from a point to all others to determine closest points (neighbors)
+
+- Params:
+    dataframe = 2d array consisting of doubles, holding all input data
+    fold_split = index indicating the start of the training portion of our data
+    verbose = flag to indicate whether or not to print console output
+    k = number of neighbors
+    query = index of the row for which we want to calculate neighbor distances
+
+- Return:
+    void
+*/
+void generate_neighbors(double dataframe[NUM_ROWS][NUM_COLS], int fold_split,  bool verbose, int k, int query) {
+    
+    // Fold split should be 183 for basic version
+
+    // If our test fold contains 182, start scanning at 183, etc.
+    int num_train_points = NUM_ROWS - fold_split;
+    double distances_list[num_train_points][2];
+
+    clock_t start;
+    start = clock();
+
+    for(int i = fold_split; i < NUM_ROWS; i++) {
+        double distance = calculate_euclidian(dataframe, query, i, false);
+        distances_list[i - fold_split][0] = i;
+        distances_list[i - fold_split][1] = distance;
+        cout << "Row (" << i << ") Distance = " << distances_list[i-fold_split][1] << endl;
+    }
+
+    clock_t elapsed;
+    elapsed = clock() - start;
+
+    if(verbose) {
+        printf("Calculating distances took: %f seconds. \n", ((float)elapsed) / CLOCKS_PER_SEC);
+    }
+
+}
+
+
+
 
 /*
 calculate_weights(neighbors, verbose)
@@ -67,9 +136,9 @@ calculate_weights(neighbors, verbose)
          https://www.tutorialspoint.com/cplusplus/cpp_return_arrays_from_functions.htm
 
          */
-double * calculate_weights(double neighbors[K], bool verbose) {
+void calculate_weights(double neighbors[K], bool verbose) {
     int num_neighbors = K;
-    total_neighbor_dist = 0;
+    double total_neighbor_dist = 0;
 
     for(int i = 0; i < num_neighbors; i++) {
 
@@ -83,14 +152,13 @@ double * calculate_weights(double neighbors[K], bool verbose) {
     for(int i = 0; i < num_neighbors; i++) {
 
         // Store scaled weights
-        neighbor_wights[i] = (neighbors[K + i] /total_neighbor_dist);
+        neighbor_weights[i] = (neighbors[K + i] /total_neighbor_dist);
 
         if(verbose) {
             cout << "Neighbor " << (i + 1) << " weight: " << neighbor_weights[i] << endl;
         }
     }
 
-    return neighbor_weights;
 }
 
 /*
@@ -122,7 +190,6 @@ void evaluate_performance(int predicted[NUM_ROWS], int actual[NUM_ROWS]) {
 
     double score = (true_res / total);
     cout << "Classification Accuracy: " << score << endl;
-    return score;
 }
 
 /*
@@ -146,7 +213,7 @@ k_fold(dataframe, k, verbose)
 */
 void k_fold(double dataframe[NUM_ROWS][NUM_COLS], int folds, bool verbose) {
 
-    int fold_size = int(NUM_ROWS / folds);
+    // int fold_size = int(NUM_ROWS / folds);
 
     // ignoring for now.. 
 }
@@ -211,7 +278,13 @@ int main() {
         cout << "unable to open data file";
     }
 
-    print_row(dataframe, 918);
+    // Test = 0-182
+    // Train = 183-917
+
+    print_row(dataframe, 0);
+    print_row(dataframe, 200);
+
+    generate_neighbors(dataframe, 183, true, 5, 12);
 
     return 0;
 }
