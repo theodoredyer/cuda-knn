@@ -11,10 +11,25 @@
 #define NUM_COLS 12
 #define NUM_ROWS 918
 #define TRAIN_POINTS 735
+#define TEST_FOLD 138
 #define K 5
 
 
 using namespace std;
+
+
+__global__ void calc_distances(double dataframe[NUM_ROWS][NUM_COLS], const unsigned int num_elements)
+{
+        const unsigned int tid = (blockIdx.x * blockDim.x) + threadIdx.x;
+        if(tid < TEST_FOLD)
+        {
+            double distance = 0;
+
+            for(int i = 0; i < (NUM_COLS - 1); i++) {
+                double p_dist = dataframe[tid][i] - dataframe[]
+            }
+        }
+}
 
 /*
 calculate_euclidian(dataframe, row_one, row_two)
@@ -36,6 +51,8 @@ double calculate_euclidian(double dataframe[NUM_ROWS][NUM_COLS], int row_one, in
         double p_dist = dataframe[row_one][i] - dataframe[row_two][i];
         p_dist *= p_dist;
         distance += p_dist;
+
+
     }
 
     distance = sqrt(distance);
