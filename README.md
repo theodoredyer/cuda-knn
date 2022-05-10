@@ -1,3 +1,5 @@
+https://www.youtube.com/watch?v=rr0hrlWL3X8
+
 # cuda-knn
  Implementation and analysis of the machine learning algorithm k-nearest neighbors, designed to leverage the GPU framework CUDA. 
 
