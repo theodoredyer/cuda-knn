@@ -67,8 +67,8 @@ def calculate_weights(neighbors, verbose):
     neighbor_weights = []
     for i in range(k):
         neighbor_weights.append(neighbors[i][1] / total_neighbor_dist)
-        # if(verbose):
-            # print('Neighbor ' + str(i+1) + ' weight: ' + str(neighbor_weights[i]))
+        if(verbose):
+            print('Neighbor ' + str(i+1) + ' weight: ' + str(neighbor_weights[i]))
     if(verbose):
         print(sum(neighbor_weights))
         print()
@@ -479,30 +479,30 @@ print(heart_failure_df)
 
 # Setting up train and test split
 train, test = k_fold(heart_failure_df, 'heart_disease', 5, 'classification', True)
-print("done?")
-
-#%%
-
-
-
-time_test(10, False)
 
 
 #%%
-#kval = 12
 
-#full_start = time.time()
-#knn = knn_init(train, 'classification', heart_failure_target, heart_failure_knn_columns, False)
-#knn_preds = []
-#for i in range(len(test)):
-#    knn_preds.append(knn(kval, test.iloc[i], 'classification'))
+
+
+time_test(2, True)
+
+
+#%%
+kval = 3
+
+full_start = time.time()
+knn = knn_init(train, 'classification', heart_failure_target, heart_failure_knn_columns, False)
+knn_preds = []
+for i in range(len(test)):
+    knn_preds.append(knn(kval, test.iloc[i], 'classification'))
     
-#full_end = time.time()
-#print('Full execution time: ' + str(full_end - full_start) + ' seconds. (' + str(kval) + ' neighbors)')
+full_end = time.time()
+print('Full execution time: ' + str(full_end - full_start) + ' seconds. (' + str(kval) + ' neighbors)')
     
 
 #%%
 
-#evaluate_performance(knn_preds, test[heart_failure_target], 'classification')
+evaluate_performance(knn_preds, test[heart_failure_target], 'classification')
 
 

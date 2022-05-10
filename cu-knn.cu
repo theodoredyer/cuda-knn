@@ -48,23 +48,6 @@ double calculate_euclidian(double dataframe[NUM_ROWS][NUM_COLS], int row_one, in
 }
 
 /*
-generate_neighbors(distances_list, verbose, k)
-Sorts a list of neighbors to a query point to determine the k closest ones.
-
-- Params:
-    distances_list = array containing the following:
-        [row ID][distance to query point]
-    verbose = flag to indicate whether or not to print console output
-    k = number of neighbors to return
-
-- Return:
-    void
-*/
-void sort_neighbors(double distances_list[TRAIN_POINTS][2], bool verbose, int k) {
-    cout << "Not implementing in this phase of the project" << endl;
-}
-
-/*
 generate_neighbors(dataframe, fold_split, verbose, k)
 - Computes the distances from a point to all others to determine closest points (neighbors)
 
@@ -90,6 +73,7 @@ void generate_neighbors(double dataframe[NUM_ROWS][NUM_COLS], int fold_split,  b
     start = clock();
 
     for(int i = fold_split; i < NUM_ROWS; i++) {
+        // Toggle
         double distance = calculate_euclidian(dataframe, query, i, false);
         distances_list[i - fold_split][0] = i;
         distances_list[i - fold_split][1] = distance;
@@ -106,6 +90,21 @@ void generate_neighbors(double dataframe[NUM_ROWS][NUM_COLS], int fold_split,  b
 
 }
 
+
+/*
+time_test(dataframe, fold_split, verbose, k, iterations)
+Executes a performance test of generating distances for use in k-nn.
+
+- Params:
+    dataframe = 2d array consisting of doubles, holding all input data
+    fold_split = integer distinguishing the row index at which our training data starts
+    verbose = boolean flag which determines whether or now we should print debugg output
+    k = number of desired neighbors for algorithm execution
+    iterations = number of query points to test.
+
+- Return:
+    void
+*/
 void time_test(double dataframe[NUM_ROWS][NUM_COLS], int fold_split,  bool verbose, int k, int iterations) {
     
     clock_t start;
@@ -115,7 +114,7 @@ void time_test(double dataframe[NUM_ROWS][NUM_COLS], int fold_split,  bool verbo
         if(verbose) {
             cout << "Query Index: " << i << endl;
         }
-        generate_neighbors(dataframe, 183, verbose, 5, i);
+        generate_neighbors(dataframe, 138, verbose, 5, i);
     }
 
     clock_t elapsed;
@@ -211,31 +210,6 @@ void evaluate_performance(int predicted[NUM_ROWS], int actual[NUM_ROWS]) {
     cout << "Classification Accuracy: " << score << endl;
 }
 
-/*
-k_fold(dataframe, k, verbose)
-    Performs k-fold cross validation, dividing up proper index segments and 
-    evaluating each fold agains the rest to determine proper splits
-
-- Params:
-    dataframe = 2d array consisting of doubles, holding all input data
-    folds = number of folds to split the data into
-    verbose = boolean argument to signify whether or not we should print debug output
-
-- Return:
-    Still figuring this out, in the python version I returned two lists, but not entirely
-    sure how to implement that in this version
-
-- Note:
-    on second though I might just hard code these values instead of determining them here, 
-    I can just pull them from a test run in the equivalent python function, for now leaving it here. 
-
-*/
-void k_fold(double dataframe[NUM_ROWS][NUM_COLS], int folds, bool verbose) {
-
-    // int fold_size = int(NUM_ROWS / folds);
-
-    // ignoring for now.. 
-}
 
 /*
 print_row(dataframe, row)
@@ -300,10 +274,7 @@ int main() {
     // Test = 0-182
     // Train = 183-917
 
-    //print_row(dataframe, 0);
-    //print_row(dataframe, 200);
-
-    time_test(dataframe, 183, false, 5, 100);
+    time_test(dataframe, 183, true, 5, 182);
 
     return 0;
 }
